@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <OutputType>Library</OutputType>
+    <RootNamespace>PrimeInventory.MauiClient</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    
+    <!-- This is a MAUI-ready project structure that requires MAUI workload to be built as an executable app -->
+    <!-- On platforms without MAUI workload, it compiles as a library demonstrating the architecture -->
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\ApplicationCore\PrimeInventory.ApplicationCore\PrimeInventory.ApplicationCore.csproj" />
+  </ItemGroup>
+
+  <!-- MAUI-specific files are included as Content to preserve structure -->
+  <ItemGroup>
+    <Content Include="**/*.xaml" />
+    <Content Include="Resources/**/*" />
+  </ItemGroup>
+
+</Project>
