@@ -8,10 +8,12 @@ public class InventoryApiService
     private readonly HttpClient _httpClient;
     private readonly string _baseUrl;
 
-    public InventoryApiService()
+    public InventoryApiService(HttpClient httpClient)
     {
-        _httpClient = new HttpClient();
-        _baseUrl = "https://localhost:7001/api"; // Update with actual API URL
+        _httpClient = httpClient;
+        // Base URL should be configured via appsettings or environment variables
+        // Default to localhost for development
+        _baseUrl = "https://localhost:7272/api";
     }
 
     // Products
@@ -62,6 +64,18 @@ public class InventoryApiService
         return await response.Content.ReadFromJsonAsync<CategoryDto>() ?? category;
     }
 
+    public async Task UpdateCategoryAsync(CategoryDto category)
+    {
+        var response = await _httpClient.PutAsJsonAsync($"{_baseUrl}/categories/{category.Id}", category);
+        response.EnsureSuccessStatusCode();
+    }
+
+    public async Task DeleteCategoryAsync(int id)
+    {
+        var response = await _httpClient.DeleteAsync($"{_baseUrl}/categories/{id}");
+        response.EnsureSuccessStatusCode();
+    }
+
     // Suppliers
     public async Task<List<SupplierDto>> GetSuppliersAsync()
     {
@@ -78,5 +92,17 @@ public class InventoryApiService
         var response = await _httpClient.PostAsJsonAsync($"{_baseUrl}/suppliers", supplier);
         response.EnsureSuccessStatusCode();
         return await response.Content.ReadFromJsonAsync<SupplierDto>() ?? supplier;
+    }
+
+    public async Task UpdateSupplierAsync(SupplierDto supplier)
+    {
+        var response = await _httpClient.PutAsJsonAsync($"{_baseUrl}/suppliers/{supplier.Id}", supplier);
+        response.EnsureSuccessStatusCode();
+    }
+
+    public async Task DeleteSupplierAsync(int id)
+    {
+        var response = await _httpClient.DeleteAsync($"{_baseUrl}/suppliers/{id}");
+        response.EnsureSuccessStatusCode();
     }
 }
